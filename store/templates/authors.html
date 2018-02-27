@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="div66">
+  <h1>Welcome, {{ user.username }}!</h1>
+
+  {% for authorr in authors %}
+  
+    <div style="margin-bottom: 50px ; float:left">
+    <div class="card">
+      <a href="/author/{{ authorr.id }}">
+        <img src="/{{ authorr.pic.name }}" width="150px" height="200px">
+
+        <div class="title3">{{ authorr.name }}</div>
+
+      </a>
+    </div>
+
+    
+  {% empty %}
+    <div>No Authors available</div>
+  {% endfor %}
+</div>
+{% endblock %}

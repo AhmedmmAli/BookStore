@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Book{% endblock %}
+
+
+{% block content %}
+<div class="bookpage">
+  <div class="fontbtn">
+  <a href="/book/{{ book.id }}">
+  	<img src="/{{ book.pic.name }}" width="370px" height="430px"   >
+  	<div class="title1">{{ book.title }}</div>
+  </a>
+
+  <a href="/author/{{ book.author.id }}">
+  <div class="title1">Author:{{ book.author }}</div>
+  </a>
+ </div>
+
+
+ <div class="fontbtn2">
+    {% if show_read %}
+  	  <form method="post">
+  	    {% csrf_token %}
+  	     <button type="submit">Mark as read</button>
+  	  </form>
+     {% else %}
+  	You have read this book
+     {% endif %}
+
+
+      {% if show_wish %}
+  	      <form method="post">
+		         {% csrf_token %}
+		          <input type="hidden" name="request" value="WISH">
+    		      <button type="submit">Add to my wish list</button>
+        	</form>
+      {% else %}
+        This book is now on your wish list
+    {% endif %}
+
+    </div>
+
+      <h4>Rate:</h4>
+      <input type="hidden" id="rate" value={{rate.rate}}>
+          <fieldset class="rating">
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" id="label5" title="Rocks!">5 stars</label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" id="label4" title="Pretty good">4 stars</label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" id="label3" title="Meh">3 stars</label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" id="label2" title="Kinda bad">2 stars</label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" id="label1" title="Sucks big time">1 star</label>
+          </fieldset>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        if({{ rateVal }}!=0){
+            var num = {{ rateVal }}
+            for (var i=num; i>0; i--) {
+                $('#label' + i).css('color', '#F90')
+            }
+        }
+        $(document).ready(function(){
+            // Check Radio-box
+            $(".rating input:radio").attr("checked", false);
+            $('.rating input').click(function () {
+                $(".rating span").removeClass('checked');
+                $(this).parent().addClass('checked');
+            });
+
+            $('input:radio').change(function(){
+                var userRating = this.value;
+                window.location.href='{{book.id}}/rate/'+ userRating
+            });
+        });
+
+    </script>
+
+ 
+ 
+
+
+
+
+
+
+
+ </div>
+
+{% endblock %}
+
