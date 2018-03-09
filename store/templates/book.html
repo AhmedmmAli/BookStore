@@ -10,7 +10,9 @@
   	<img src="/{{ book.pic.name }}" width="370px" height="430px"   >
   	<div class="title1">{{ book.title }}</div>
   </a>
-
+  <div>
+    {{book.description}}
+  </div>
   <a href="/author/{{ book.author.id }}">
   <div class="title1">Author:{{ book.author }}</div>
   </a>
